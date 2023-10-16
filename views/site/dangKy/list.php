@@ -1,6 +1,5 @@
 <main class="formdk">
 
-
     <?php foreach ($vlAllS as $i => $s) { ?>
         <div class="thongTinSP">
             <div class="">

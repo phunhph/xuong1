@@ -209,11 +209,6 @@ if (isset($_SESSION['cap_bac']) && $_SESSION['cap_bac'] == 1) {
                     $currentDateTime = date("Y-m-d H:i:s", $timestamp);
                     require_once "views/site/dangKy/list.php";
                 }
-                $vlAllS = getAllSach();
-                $count = getAllCount();
-                $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-                $vlAllS = getAllSach8($page, 8);
-                require_once "views/site/trangChu/list.php";
                 break;
             case 'danhmuc':
                 $count = getAllCountD($_GET['id_d']);
