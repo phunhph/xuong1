@@ -7,6 +7,34 @@ function getAllDangKy()
     $sql = "SELECT * FROM dang_ky";
     return getData($sql);
 }
+// Lấy đơn hàng đợi duyệt
+function getConDangKy()
+{
+    $sql = "SELECT * FROM dang_ky dang_ky where trang_thai = 1
+    ";
+    return getData($sql);
+}
+// Lấy đơn hàng đang giao
+function getGiaoDangKy()
+{
+    $sql = "SELECT * FROM dang_ky dang_ky where trang_thai = 2
+    ";
+    return getData($sql);
+}
+// Lấy đơn hàng đã giao
+function getDONEDangKy()
+{
+    $sql = "SELECT * FROM dang_ky dang_ky where trang_thai = 3
+    ";
+    return getData($sql);
+}
+// Lấy đơn hàng bị huỷ
+function getDROPDangKy()
+{
+    $sql = "SELECT * FROM dang_ky where trang_thai = 0
+    ";
+    return getData($sql);
+}
 
 // Lấy thông tin một đăng ký theo ID
 function getOneDangKy($id)
@@ -42,7 +70,7 @@ function updateDangKy($idNguoiDung, $idSach, $soLuong, $diaChi, $tongGia, $ngayD
 function updateDangGiao($id)
 {
 
-    $trangThaiMoi = 1;
+    $trangThaiMoi = 2;
 
     $sql = "UPDATE dang_ky SET trang_thai = ? WHERE id_dang_ky = ?";
     return getData($sql, [$trangThaiMoi, $id], false);
@@ -50,7 +78,13 @@ function updateDangGiao($id)
 // Cập nhật trạng thái của đăng ký có ID $id thành "Đang giao" (giả sử 1 là trạng thái đang giao)
 function updateDaGiao($id)
 {
-    $trangThaiMoi = 2;
+    $trangThaiMoi = 3;
+    $sql = "UPDATE dang_ky SET trang_thai = ? WHERE id_dang_ky = ?";
+    return getData($sql, [$trangThaiMoi, $id], false);
+}
+function updateHuy($id)
+{
+    $trangThaiMoi = 0;
     $sql = "UPDATE dang_ky SET trang_thai = ? WHERE id_dang_ky = ?";
     return getData($sql, [$trangThaiMoi, $id], false);
 }

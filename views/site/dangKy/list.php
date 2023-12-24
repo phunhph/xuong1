@@ -1,4 +1,4 @@
-<main class="formdk">
+<main class="formdk" style="min-height: 500px;">
 
     <?php foreach ($vlAllS as $i => $s) { ?>
         <div class="thongTinSP">
@@ -27,7 +27,6 @@
             <button class="dk" type="submit">Đăng ký</button>
         </form>
     <?php } ?>
-
 </main>
 <script>
 </script>

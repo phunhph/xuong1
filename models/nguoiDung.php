@@ -58,3 +58,8 @@ function checkInfo($email, $mat_khau)
         return null;
     }
 }
+function deletend($id)
+{
+    $sql = "DELETE FROM `nguoi_dung`  WHERE id_nguoi_dung=?";
+    return getData($sql, [$id], false);
+}

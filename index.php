@@ -6,6 +6,7 @@ require_once "models/dangKy.php";
 require_once "models/danhMuc.php";
 require_once "models/nguoiDung.php";
 require_once "models/sach.php";
+require_once "models/thongke.php";
 if (isset($_SESSION['cap_bac']) && $_SESSION['cap_bac'] == 1) {
     require_once "views/admin/tinh/header.php";
     if (isset($_GET['act'])) {
@@ -30,6 +31,38 @@ if (isset($_SESSION['cap_bac']) && $_SESSION['cap_bac'] == 1) {
                                 require_once "views/admin/dangKy/list.php";
                             }
                             break;
+                        case 'huy':
+                            if (isset($_GET['id'])) {
+                                $id = $_GET['id'];
+                                updateHuy($id);
+                                $vlAllDK = getAllDangKy();
+                                require_once "views/admin/dangKy/list.php";
+                            }
+                            break;
+                        default:
+                            $vlAllDK = getAllDangKy();
+                            require_once "views/admin/dangKy/list.php";
+                            break;
+                    }
+                } elseif (isset($_POST['donHang'])) {
+                    switch ($_POST['donHang']) {
+                        case 'dangGiao':
+                            $vlAllDK = getGiaoDangKy();
+                            require_once "views/admin/dangKy/list.php";
+                            break;
+                        case 'daGiao':
+                            $vlAllDK = getDONEDangKy();
+                            require_once "views/admin/dangKy/list.php";
+                            break;
+                        case 'duyet':
+                            $vlAllDK = getConDangKy();
+                            require_once "views/admin/dangKy/list.php";
+
+                            break;
+                        case 'huy':
+                            $vlAllDK = getDROPDangKy();
+                            require_once "views/admin/dangKy/list.php";
+                            break;
                         default:
                             $vlAllDK = getAllDangKy();
                             require_once "views/admin/dangKy/list.php";
@@ -37,6 +70,7 @@ if (isset($_SESSION['cap_bac']) && $_SESSION['cap_bac'] == 1) {
                     }
                 } else {
                     $vlAllDK = getAllDangKy();
+
                     require_once "views/admin/dangKy/list.php";
                 }
                 break;
@@ -158,15 +192,34 @@ if (isset($_SESSION['cap_bac']) && $_SESSION['cap_bac'] == 1) {
                 }
                 break;
             case 'nguoiDung':
-                $vlAD = getAdmin();
-                $vlND = getND();
-                require_once "views/admin/nguoiDung/list.php";
+                if (isset($_GET['nd'])) {
+                    switch ($_GET['nd']) {
+
+                        case 'delete':
+                            if (isset($_GET['id'])) {
+                                $id = $_GET['id'];
+                                deletend($id);
+                                $vlAD = getAdmin();
+                                $vlND = getND();
+                                require_once "views/admin/nguoiDung/list.php";
+                            }
+                            break;
+                    }
+                } else {
+                    $vlAD = getAdmin();
+                    $vlND = getND();
+                    require_once "views/admin/nguoiDung/list.php";
+                }
                 break;
             case 'dangXuat':
                 unset($_SESSION['cap_bac']);
                 unset($_SESSION['idus']);
                 header("Location: index.php");
                 header("Refresh:0");
+                break;
+            case 'thongKe':
+                $allTK = getAllThongKe();
+                require_once "views/admin/thongke/thongke.php";
                 break;
             default:
                 require_once "views/admin/sach/list.php";
@@ -203,6 +256,7 @@ if (isset($_SESSION['cap_bac']) && $_SESSION['cap_bac'] == 1) {
             case 'dangKy':
                 if ($_SERVER['REQUEST_METHOD'] == "POST") {
                     addDangKy($_SESSION['idus'], $_POST['idSach'], $_POST['soLuong'], $_POST['diaChi'], $_POST['gia'] * $_POST['soLuong'], $_POST['ngayDat'], 0);
+                    header('Location: index.php');
                 } else {
                     $timestamp = get_time_present();
                     $vlAllS = getOneSach($_GET['id_s']);
